@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="black">#f000</color>
+    <color name="pure_white">#fff</color>
+    <color name="gray">#ccc</color>
+    <color name="red">#f00</color>
+    <color name="tan">#e7d2a7</color>
+
+    <color name="card_red">#ef282d</color>
+    <color name="card_yellow">#ecc40d</color>
+    <color name="card_green">#b7bf1c</color>
+    <color name="card_blue">#68b7e0</color>
+    <color name="card_back">#2d0503</color>
+
+    <color name="player_white">#d5d4cf</color>
+    <color name="player_brown">#826665</color>
+    <color name="player_pink">#ce5894</color>
+    <color name="player_tan">#af9266</color>
+
+</resources>

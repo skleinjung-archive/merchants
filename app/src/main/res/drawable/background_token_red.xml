@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <solid android:color="@color/card_red"/>
+
+            <stroke
+                android:color="@color/black"
+                android:width="@dimen/player_achievement_token_border_thickness"/>
+
+            <padding
+                android:left="@dimen/player_achievement_token_padding_horizontal"
+                android:right="@dimen/player_achievement_token_padding_horizontal"
+                android:top="@dimen/player_achievement_token_padding_vertical"
+                android:bottom="@dimen/player_achievement_token_padding_vertical"
+                />
+
+            <corners android:radius="@dimen/player_achievement_token_border_radius"/>
+        </shape>
+    </item>
+</selector>
+

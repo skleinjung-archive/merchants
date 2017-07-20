@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="120dp"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/player_summary_padding"
+    android:paddingBottom="@dimen/player_summary_padding"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/player_summary_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/game_divider"
+            android:layout_marginBottom="@dimen/game_info_title_margin"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:visibility="gone"
+            />
+
+        <RelativeLayout
+            android:id="@+id/player_achievement_tokens_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/player_summary_name"
+            android:layout_centerHorizontal="true"
+            >
+            <TextView
+                android:id="@+id/game_achievement_tokens_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/game_player_summary_title_margin"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:textSize="14sp"
+                android:text="Tokens"
+                />
+
+            <GridLayout
+                android:id="@+id/player_achievement_tokens_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/game_achievement_tokens_title"
+                android:columnCount="2"
+                >
+                <TextView
+                    android:id="@+id/player_achievement_token_red"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                    android:layout_marginEnd="@dimen/player_achievement_token_intercolumn_margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    android:textStyle="bold"
+                    android:background="@drawable/background_token_red"
+                    />
+
+                <TextView
+                    android:id="@+id/player_achievement_token_yellow"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    android:textStyle="bold"
+                    android:background="@drawable/background_token_yellow"
+                    />
+
+                <TextView
+                    android:id="@+id/player_achievement_token_green"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                    android:layout_marginEnd="@dimen/player_achievement_token_intercolumn_margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    android:textStyle="bold"
+                    android:background="@drawable/background_token_green"
+                    />
+
+                <TextView
+                    android:id="@+id/player_achievement_token_blue"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                    android:gravity="center"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    android:textStyle="bold"
+                    android:background="@drawable/background_token_blue"
+                    />
+            </GridLayout>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/player_summary_merchandise_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/player_achievement_tokens_layout"
+            android:layout_marginBottom="@dimen/game_player_summary_title_margin"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:text="Goods"
+            />
+
+        <LinearLayout
+            android:id="@+id/player_merchandise_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/player_summary_merchandise_title"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                >
+                <TextView
+                    android:id="@+id/player_merchandise_price_1"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/player_merchandise_price_1"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                >
+                <TextView
+                    android:id="@+id/player_merchandise_price_2"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/player_merchandise_price_2"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                >
+                <TextView
+                    android:id="@+id/player_merchandise_price_3"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/player_merchandise_price_3"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/player_merchandise_price_4"
+                    android:layout_width="@dimen/player_good_color_indicator_size"
+                    android:layout_height="@dimen/player_good_color_indicator_size"
+                    android:gravity="center"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/player_merchandise_price_4"
+                    android:layout_centerVertical="true"
+                    android:textSize="@dimen/player_achievement_token_text_size"
+                    />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+</RelativeLayout>

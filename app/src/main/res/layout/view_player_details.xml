@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/player_detail_padding"
+    >
+
+    <!--
+    <RelativeLayout
+        android:id="@+id/player_achievement_tokens_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/game_divider"
+        android:layout_marginEnd="@dimen/game_info_section_margin"
+        >
+        <TextView
+            android:id="@+id/game_achievement_tokens_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/game_info_title_margin"
+            android:layout_centerHorizontal="true"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:text="Tokens"
+            />
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@id/game_achievement_tokens_title"
+            android:layout_centerHorizontal="true"
+            >
+            <GridLayout
+                android:id="@+id/player_achievement_tokens_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:columnCount="2"
+                >
+                    <TextView
+                        android:id="@+id/player_achievement_token_red"
+                        android:layout_width="@dimen/player_good_color_indicator_size"
+                        android:layout_height="@dimen/player_good_color_indicator_size"
+                        android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                        android:layout_marginEnd="@dimen/player_achievement_token_intercolumn_margin"
+                        android:gravity="center"
+                        android:textSize="@dimen/player_achievement_token_text_size"
+                        android:background="@drawable/background_token_red"
+                        />
+
+                    <TextView
+                        android:id="@+id/player_achievement_token_yellow"
+                        android:layout_width="@dimen/player_good_color_indicator_size"
+                        android:layout_height="@dimen/player_good_color_indicator_size"
+                        android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                        android:gravity="center"
+                        android:textSize="@dimen/player_achievement_token_text_size"
+                        android:background="@drawable/background_token_yellow"
+                        />
+
+                    <TextView
+                        android:id="@+id/player_achievement_token_green"
+                        android:layout_width="@dimen/player_good_color_indicator_size"
+                        android:layout_height="@dimen/player_good_color_indicator_size"
+                        android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                        android:layout_marginEnd="@dimen/player_achievement_token_intercolumn_margin"
+                        android:gravity="center"
+                        android:textSize="@dimen/player_achievement_token_text_size"
+                        android:background="@drawable/background_token_green"
+                        />
+
+                    <TextView
+                        android:id="@+id/player_achievement_token_blue"
+                        android:layout_width="@dimen/player_good_color_indicator_size"
+                        android:layout_height="@dimen/player_good_color_indicator_size"
+                        android:layout_marginBottom="@dimen/player_achievement_token_margin"
+                        android:gravity="center"
+                        android:textSize="@dimen/player_achievement_token_text_size"
+                        android:background="@drawable/background_token_blue"
+                        />
+            </GridLayout>
+        </ScrollView>
+    </RelativeLayout>
+    -->
+
+    <RelativeLayout
+        android:id="@+id/player_hand_row"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/card_row_height"
+        >
+        <!--android:layout_toEndOf="@id/player_achievement_tokens_layout"-->
+
+        <FrameLayout
+            android:id="@+id/player_hand_title"
+            android:layout_width="@dimen/card_row_title_width"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|end"
+                android:paddingLeft="7dp"
+                android:gravity="bottom"
+                android:rotation="-90"
+                android:textStyle="bold"
+                android:textSize="@dimen/card_row_title_text_size"
+                android:text="Hand"
+                />
+        </FrameLayout>
+
+        <com.thrashplay.merchants.widget.CardRecyclerView
+            android:id="@+id/player_hand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/player_hand_title"
+            android:clipChildren="false"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/player_merchandise_row"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/card_row_height"
+        android:layout_below="@id/player_hand_row"
+        >
+        <!--android:layout_toEndOf="@id/player_achievement_tokens_layout"-->
+
+        <FrameLayout
+            android:id="@+id/player_merchandise_title"
+            android:layout_width="@dimen/card_row_title_width"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            >
+            <TextView
+                android:layout_width="1000dp"
+                android:layout_height="1000dp"
+                android:layout_gravity="bottom|end"
+                android:paddingLeft="7dp"
+                android:gravity="bottom"
+                android:rotation="-90"
+                android:textStyle="bold"
+                android:textSize="@dimen/card_row_title_text_size"
+                android:text="Goods"
+                />
+        </FrameLayout>
+
+        <com.thrashplay.merchants.widget.CardRecyclerView
+            android:id="@+id/player_merchandise"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/player_merchandise_title"
+            />
+    </RelativeLayout>
+</RelativeLayout>

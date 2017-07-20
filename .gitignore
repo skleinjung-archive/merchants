@@ -1,0 +1,7 @@
+.classpath
+.project
+.settings/
+target/
+/.idea/workspace.xml
+/.idea/tasks.xml
+/build/generated

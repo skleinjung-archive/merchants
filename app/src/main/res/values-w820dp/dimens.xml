@@ -1,0 +1,79 @@
+<resources>
+    <!-- Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively). -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="game_ship_location_size">62dp</dimen>
+    <dimen name="game_ship_location_margin_start">3dp</dimen>
+    <dimen name="game_ship_location_margin_end">3dp</dimen>
+    <dimen name="game_ship_location_margin_top">3dp</dimen>
+    <dimen name="game_ship_location_margin_bottom">3dp</dimen>
+    <dimen name="game_ship_location_ship_margin">1dp</dimen>
+    <dimen name="game_ship_location_border_width">5dp</dimen>
+
+    <!-- card dimens -->
+    <dimen name="card_width">93dp</dimen>
+    <dimen name="card_height">130dp</dimen>
+    <dimen name="card_font_size">64sp</dimen>
+
+    <dimen name="card_border_thickness">5dp</dimen>
+    <dimen name="card_border_radius">5dp</dimen>
+    <dimen name="card_padding_horizontal">4dp</dimen>
+    <dimen name="card_padding_vertical">4dp</dimen>
+
+    <dimen name="card_list_horizontal_margin">3dp</dimen>
+    <dimen name="card_list_vertical_margin">3dp</dimen>
+
+    <dimen name="card_row_height">130dp</dimen>
+    <dimen name="card_row_title_width">18dp</dimen>
+
+    <!-- game info block at the top -->
+    <dimen name="game_info_title_margin">12dp</dimen>
+    <dimen name="game_info_section_margin">30dp</dimen>
+
+    <dimen name="player_score_size">70dp</dimen>
+    <dimen name="player_score_margin">6dp</dimen>
+
+    <dimen name="player_border_thickness">2dp</dimen>
+    <dimen name="player_border_radius">5dp</dimen>
+    <dimen name="player_padding_horizontal">2dp</dimen>
+    <dimen name="player_padding_vertical">2dp</dimen>
+
+    <!-- player stats -->
+    <dimen name="game_player_summary_title_margin">8dp</dimen>
+    <dimen name="player_summary_padding">5dp</dimen>
+    <dimen name="player_detail_padding">8dp</dimen>
+
+    <dimen name="player_selector_margin">12dp</dimen>
+    <dimen name="player_selector_width">96dp</dimen>
+    <dimen name="player_selector_height">48dp</dimen>
+    <dimen name="player_selector_text_size">24sp</dimen>
+
+    <dimen name="player_good_color_indicator_size">33dp</dimen>
+    <dimen name="player_achievement_token_text_size">18sp</dimen>
+    <dimen name="player_achievement_token_margin">3dp</dimen>
+    <dimen name="player_achievement_token_intercolumn_margin">6dp</dimen>
+    <dimen name="player_achievement_token_border_thickness">1dp</dimen>
+    <dimen name="player_achievement_token_border_radius">0dp</dimen>
+    <dimen name="player_achievement_token_padding_horizontal">4dp</dimen>
+    <dimen name="player_achievement_token_padding_vertical">4dp</dimen>
+
+    <dimen name="player_details_width">500dp</dimen>
+
+    <dimen name="card_row_title_text_size">18sp</dimen>
+
+    <!-- action buttons -->
+    <dimen name="action_radio_group_margin_top">10dp</dimen>
+    <dimen name="action_button_width">180dp</dimen>
+    <dimen name="long_action_button_width">280dp</dimen>
+    <dimen name="action_button_height">48dp</dimen>
+    <dimen name="action_button_margin">20dp</dimen>
+    <dimen name="action_button_text_size">21sp</dimen>
+    <dimen name="action_button_border_thickness">2dp</dimen>
+    <dimen name="action_button_padding_horizontal">4dp</dimen>
+    <dimen name="action_button_padding_vertical">4dp</dimen>
+    <dimen name="action_button_border_radius">5dp</dimen>
+</resources>
