@@ -1,7 +1,9 @@
 .classpath
 .project
 .settings/
+local.properties
 target/
 /.idea/workspace.xml
 /.idea/tasks.xml
 /build/generated
+/build/intermediates/dex-cache
