@@ -7,3 +7,5 @@ target/
 /.idea/tasks.xml
 /build/generated
 /build/intermediates/dex-cache
+python/.idea/workspace.xml
+/python/__pycache__
