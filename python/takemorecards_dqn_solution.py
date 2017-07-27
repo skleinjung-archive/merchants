@@ -9,7 +9,7 @@ class Agent:
         # These lines established the feed-forward part of the network. The agent takes a state and produces an action.
         self.state_in = tf.placeholder(shape=[None, 12], dtype=tf.float32, name="state_in")
         hidden = slim.fully_connected(self.state_in, 144, biases_initializer=None, activation_fn=tf.nn.relu)
-        # hidden2 = slim.fully_connected(hidden, 3744, biases_initializer=None, activation_fn=tf.nn.relu)
+        #hidden2 = slim.fully_connected(hidden, 3744, biases_initializer=None, activation_fn=tf.nn.relu)
         self.output = slim.fully_connected(hidden, 12, activation_fn=tf.nn.softmax, biases_initializer=None)
         self.chosen_action = tf.argmax(self.output, 1)
 
@@ -17,7 +17,7 @@ class Agent:
         self.loss = tf.reduce_sum(tf.square(self.target_output - self.output))
         # self.loss = tf.nn.l2_loss(self.target_output - self.output)
 
-        trainer = tf.train.GradientDescentOptimizer(learning_rate=0.1)
+        trainer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
         self.updateModel = trainer.minimize(self.loss)
 
 
@@ -40,7 +40,8 @@ def get_card_value(card_index):
         return 5
 
 
-episodes_per_batch = 500
+turns_per_episode = 108
+episodes_per_batch = 10
 number_of_batches = 100000000
 
 env = bmc.get_environment(bmc.Environment.TakeValidCards)
@@ -54,6 +55,7 @@ with tf.Session() as session:
 
     for batch in range(number_of_batches):
         turn_count = 0
+        invalid_moves = 0
         for episode in range(episodes_per_batch):
             state = env.reset()
 
@@ -62,6 +64,8 @@ with tf.Session() as session:
 
                 chosen_action, output = session.run([agent.chosen_action, agent.output], feed_dict={agent.state_in: [state]})
                 new_state, reward, done = env.step(get_card_color(chosen_action), get_card_value(chosen_action))
+                if reward < 0:
+                    invalid_moves += 1
 
                 Q1 = session.run(agent.output, feed_dict={agent.state_in: [new_state]})
                 maxQ1 = numpy.max(Q1)
@@ -75,4 +79,4 @@ with tf.Session() as session:
                 if done:
                     break
 
-        print("Batch: {}, Average Turns: {}".format(batch + 1, turn_count / episodes_per_batch))
+        print("Batch: {}, Average Turns: {}, Invalid Moves: {}".format(batch + 1, turn_count / episodes_per_batch, invalid_moves))
