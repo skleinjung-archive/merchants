@@ -22,6 +22,9 @@ class Card:
     def __str__(self):
         return "{}{}".format(self.value, self.color.name[0])
 
+    def __repr__(self):
+        return "{}{}".format(self.value, self.color.name[0])
+
     def get_index(self):
         index = self._get_color_index_offset(self.color)
         if self.value == 3:
@@ -95,6 +98,12 @@ class BaseModel:
         player.hand.append(card)
         self._refill_market()
 
+    def get_card_from_market(self, color, value):
+        for card in self.market:
+            if card.color == color and card.value == value:
+                return card
+        return None
+
     def is_game_over(self):
         return len(self.market) == 0 and len(self._deck) == 0
 
@@ -127,23 +136,25 @@ class TakeValidCardsModel(BaseModel):
         super(TakeValidCardsModel, self).__init__(*args, **kwargs)
 
 
-class BuyMoreCardsModel(BaseModel):
+class TakeMoreCardsModel(BaseModel):
     def __init__(self, *args, **kwargs):
-        super(BuyMoreCardsModel, self).__init__(*args, **kwargs)
+        super(TakeMoreCardsModel, self).__init__(*args, **kwargs)
         self.adversaryPlayer = Player("Adversary")
         self._initialize_hand(self.adversaryPlayer)
 
 
 class TakeMoreCardsAdversary:
-    def get_card_to_take(self, buyMoreCards):
+    def get_card_to_take(self, takeMoreCardsModel):
         NotImplementedError("Abstract implementation of TakeMoreCardsAdversary")
-        # return color, value
+        # return card
 
-# class PickFirstAvailableTakeMoreCardsAdversary:
-#     def get_card_to_take(self, buyMoreCards):
-#         for color in list(Color):
-#             for i in range(self._rules.numberOfTwosPerColor):
-#                 self._deck.append(Card(color, 2))
+
+class PickFirstAvailableTakeMoreCardsAdversary:
+    def get_card_to_take(self, take_more_cards_model):
+        if len(take_more_cards_model.market) > 0:
+            return take_more_cards_model.market[0]
+        else:
+            return None
 
 
 class TakeValidCardsEnvironment:
@@ -193,6 +204,55 @@ class TakeValidCardsEnvironment:
         return None
 
 
+class TakeMoreCardsEnvironment:
+    def __init__(self):
+        self._model = None
+        self._adversary = PickFirstAvailableTakeMoreCardsAdversary()
+
+    def reset(self):
+        self._model = TakeMoreCardsModel(Rules())
+        return self.get_state()
+
+    def step(self, color, value):
+        card = self._model.get_card_from_market(color, value)
+
+        if card is None:
+            reward = -10
+            done = True
+        else:
+            self._model.take_card(self._model.agentPlayer, card)
+
+            done = self._model.is_game_over()
+            if not done:
+                self._model.take_card(self._model.adversaryPlayer, self._adversary.get_card_to_take(self._model))
+
+            done = self._model.is_game_over()
+            if done:
+                reward = sum(card.value for card in self._model.agentPlayer.hand)
+            else:
+                reward = 1
+
+        return self.get_state(), reward, done
+
+    def render(self):
+        print("Market: {}, Agent: {}, Adversary: {}".format(self._model.market, self._model.agentPlayer.hand, self._model.adversaryPlayer.hand))
+
+    def get_state(self):
+        #result = [self._bmc.get_deck_size(), len(self._bmc.adversaryPlayer.hand)]
+        result = []
+        result.extend(self._get_card_counts(self._model.market))
+        # result.extend(self._get_card_counts(self._bmc.adversaryPlayer.goods))
+        # result.extend(self._get_card_counts(self._bmc.agentPlayer.goods))
+        # result.extend(self._get_card_counts(self._bmc.agentPlayer.hand))
+        return result
+
+    def _get_card_counts(self, cards):
+        result = array.array('i', (0 for i in range(0, 12)))
+        for card in cards:
+            result[card.get_index()] += 1
+        return result
+
+
 @unique
 class Environment(Enum):
     TakeValidCards = 1
@@ -207,7 +267,7 @@ def get_environment(which):
     if which == Environment.TakeValidCards:
         return TakeValidCardsEnvironment()
     if which == Environment.TakeMoreCards:
-        raise NotImplementedError("TakeMoreCards environment not implemented")
+        return TakeMoreCardsEnvironment()
     if which == Environment.BuyMoreCards:
         raise NotImplementedError("BuyMoreCards environment not implemented")
 
