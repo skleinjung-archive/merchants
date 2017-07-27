@@ -9,3 +9,4 @@ target/
 /build/intermediates/dex-cache
 python/.idea/workspace.xml
 /python/__pycache__
+/python/.idea/misc.xml
