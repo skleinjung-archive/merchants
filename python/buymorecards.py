@@ -14,6 +14,16 @@ class Color(Enum):
         return self.name
 
 
+@unique
+class State(Enum):
+    InDeck = 1
+    InMarket = 2
+    InHand = 3
+
+    def __str__(self):
+        return self.name
+
+
 class Card:
     def __init__(self, color, value):
         self.color = color
@@ -77,7 +87,7 @@ class BaseModel:
     def __init__(self, rules):
         self.agentPlayer = Player("Agent")
         self.market = []
-        self._deck = []
+        self.deck = []
         self._rules = rules
 
         self._build_deck()
@@ -88,7 +98,7 @@ class BaseModel:
         # print("Deck Size: {}".format(len(self._deck)))
 
     def get_deck_size(self):
-        return len(self._deck)
+        return len(self.deck)
 
     def take_card(self, player, card):
         if card not in self.market:
@@ -105,30 +115,30 @@ class BaseModel:
         return None
 
     def is_game_over(self):
-        return len(self.market) == 0 and len(self._deck) == 0
+        return len(self.market) == 0 and len(self.deck) == 0
 
     def _initialize_hand(self, player):
         while sum(card.value for card in player.hand) < self._rules.minimumStartingHandValue:
-            player.draw_card(self._deck)
+            player.draw_card(self.deck)
 
     def _build_deck(self):
         for color in list(Color):
             for i in range(self._rules.numberOfTwosPerColor):
-                self._deck.append(Card(color, 2))
+                self.deck.append(Card(color, 2))
 
             for i in range(self._rules.numberOfThreesPerColor):
-                self._deck.append(Card(color, 3))
+                self.deck.append(Card(color, 3))
 
             for i in range(self._rules.numberOfFivesPerColor):
-                self._deck.append(Card(color, 5))
+                self.deck.append(Card(color, 5))
 
-        random.shuffle(self._deck)
+        random.shuffle(self.deck)
 
     def _refill_market(self):
         while len(self.market) < 5:
-            if len(self._deck) < 1:
+            if len(self.deck) < 1:
                 break
-            self.market.append(self._deck.pop(0))
+            self.market.append(self.deck.pop(0))
 
 
 class TakeValidCardsModel(BaseModel):
@@ -157,12 +167,84 @@ class PickFirstAvailableTakeMoreCardsAdversary:
             return None
 
 
+class CardState:
+    def __init__(self, card, state):
+        self.card = card
+        self.state = state
+
+    def __str__(self):
+        return "{}={}".format(self.card, self.state)
+
+    def __repr__(self):
+        return "{}={}".format(self.card, self.state)
+
+
 class TakeValidCardsEnvironment:
     def __init__(self):
         self._model = None
 
     def reset(self):
         self._model = TakeValidCardsModel(Rules())
+        return self.get_state()
+
+    def step(self, color, value):
+        card = self._get_card_from_market(Card(color, value))
+
+        if card is None:
+            reward = -10
+            done = True
+        else:
+            self._model.take_card(self._model.agentPlayer, card)
+            done = self._model.is_game_over()
+            if done:
+                reward = sum(card.value for card in self._model.agentPlayer.hand)
+            else:
+                reward = 1
+
+        return self.get_state(), reward, done
+
+    def get_state(self):
+        result = []
+
+        for card in self._model.deck:
+            result.append(CardState(card, State.InDeck))
+
+        for card in self._model.market:
+            result.append(CardState(card, State.InMarket))
+
+        for card in self._model.agentPlayer.hand:
+            result.append(CardState(card, State.InHand))
+
+        return result
+
+        #result = [self._bmc.get_deck_size(), len(self._bmc.adversaryPlayer.hand)]
+        # result = []
+        # result.extend(self._get_card_counts(self._model.market))
+        # result.extend(self._get_card_counts(self._bmc.adversaryPlayer.goods))
+        # result.extend(self._get_card_counts(self._bmc.agentPlayer.goods))
+        # result.extend(self._get_card_counts(self._bmc.agentPlayer.hand))
+        # return result
+
+    def _get_card_counts(self, cards):
+        result = array.array('i', (0 for i in range(0, 12)))
+        for card in cards:
+            result[card.get_index()] += 1
+        return result
+
+    def _get_card_from_market(self, card):
+        for marketCard in self._model.market:
+            if marketCard.color == card.color and marketCard.value == card.value:
+                return marketCard
+
+        return None
+
+
+class BuyMoreCardsEnvironment:
+    def __init__(self):
+        self._model = None
+
+    def reset(self):
+        self._model = BuyMoreCardsModel(Rules())
         return self.get_state()
 
     def step(self, color, value):
@@ -202,7 +284,6 @@ class TakeValidCardsEnvironment:
                 return marketCard
 
         return None
-
 
 class TakeMoreCardsEnvironment:
     def __init__(self):

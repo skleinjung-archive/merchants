@@ -2,6 +2,7 @@ import tensorflow as tf
 import tensorflow.contrib.slim as slim
 import numpy
 import buymorecards as bmc
+import buymorecards_nn as bmcnn
 
 
 class Agent:
@@ -46,6 +47,7 @@ number_of_batches = 100000000
 
 env = bmc.get_environment(bmc.Environment.TakeValidCards)
 
+encoder = bmcnn.TakeValidCardsEncoder()
 tf.reset_default_graph()
 agent = Agent()
 weights = tf.trainable_variables()[0]
@@ -62,8 +64,11 @@ with tf.Session() as session:
             while True:
                 turn_count += 1
 
-                chosen_action, output = session.run([agent.chosen_action, agent.output], feed_dict={agent.state_in: [state]})
-                new_state, reward, done = env.step(get_card_color(chosen_action), get_card_value(chosen_action))
+                chosen_action, output = session.run([agent.chosen_action, agent.output], feed_dict={agent.state_in: [encoder.encode_state(state)]})
+
+                chosen_card_state = encoder.decode_result(state, chosen_action)
+
+                new_state, reward, done = env.step(chosen_card_state)
                 if reward < 0:
                     invalid_moves += 1
 
