@@ -60,7 +60,8 @@ with tf.Session() as session:
         invalid_moves = 0
         for episode in range(episodes_per_batch):
             state = env.reset()
-
+            encoder.encode_state(state)
+            exit(0)
             while True:
                 turn_count += 1
 
