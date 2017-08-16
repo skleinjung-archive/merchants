@@ -5,8 +5,17 @@ from enum import Enum, unique
 
 
 class TakeValidCardsEncoder:
-    def encode_state(self, state):
-        return []
+    @staticmethod
+    def encode_state(state):
+        result = []
+        for card_state in state:
+            result.extend([card_state.card.color.value, card_state.card.value, card_state.state.value])
+        return result
 
-    def decode_result(self, state, result):
-        return 1, 1, 1
+    @staticmethod
+    def decode_result(state, result):
+        return state[result].card.color, state[result].card.value
+
+    @staticmethod
+    def get_encoded_state_size():
+        return 108 * 3
