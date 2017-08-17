@@ -2,15 +2,20 @@ import random
 import array
 import buymorecards as bmc
 from enum import Enum, unique
+import bitstring as bstr
 
 
 class TakeValidCardsEncoder:
     @staticmethod
     def encode_state(state):
-        result = []
-        for card_state in state:
-            result.extend([card_state.card.color.value, card_state.card.value, card_state.state.value])
-        return result
+
+        stream = bstr.BitStream()
+        for cs in state:
+            stream.append(bstr.pack('uint:3=v, uint:2=c, uint:3=s',
+                                    v=cs.card.value - 1,
+                                    c=cs.card.color.value - 1,
+                                    s=cs.state.value - 1))
+        return stream.bytes
 
     @staticmethod
     def decode_result(state, result):
