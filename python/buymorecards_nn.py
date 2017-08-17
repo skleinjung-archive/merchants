@@ -15,7 +15,8 @@ class TakeValidCardsEncoder:
                                     v=cs.card.value - 1,
                                     c=cs.card.color.value - 1,
                                     s=cs.state.value - 1))
-        return stream.bytes
+
+        return list(stream.bytes)
 
     @staticmethod
     def decode_result(state, result):
@@ -23,4 +24,4 @@ class TakeValidCardsEncoder:
 
     @staticmethod
     def get_encoded_state_size():
-        return 108 * 3
+        return 108

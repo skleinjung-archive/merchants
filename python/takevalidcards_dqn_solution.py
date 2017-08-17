@@ -8,10 +8,12 @@ import buymorecards_nn as bmcnn
 class Agent:
     def __init__(self, number_of_inputs):
         # These lines established the feed-forward part of the network. The agent takes a state and produces an action.
-        self.state_in = tf.placeholder(shape=[None, number_of_inputs], dtype=tf.uint8, name="state_in")
-        hidden = slim.fully_connected(self.state_in, number_of_inputs * 5, biases_initializer=None, activation_fn=tf.nn.relu)
+        self.state_in = tf.placeholder(shape=[None, number_of_inputs], dtype=tf.float32, name="state_in")
+        # self.string_in = tf.placeholder(shape=[1], dtype=tf.string, name="string_in")
+        # self.state_in = tf.decode_raw(self.string_in, tf.uint8)
+        hidden = slim.fully_connected(self.state_in, number_of_inputs * 2, biases_initializer=None, activation_fn=tf.nn.relu)
         # hidden2 = slim.fully_connected(hidden, 3744, biases_initializer=None, activation_fn=tf.nn.relu)
-        hidden2 = slim.fully_connected(hidden, number_of_inputs * 5 * 7, biases_initializer=None, activation_fn=tf.nn.relu)
+        hidden2 = slim.fully_connected(hidden, number_of_inputs * 2, biases_initializer=None, activation_fn=tf.nn.relu)
         self.output = slim.fully_connected(hidden2, 108, activation_fn=tf.nn.softmax, biases_initializer=None)
         self.chosen_action = tf.argmax(self.output, 1)
 
@@ -21,25 +23,6 @@ class Agent:
 
         trainer = tf.train.GradientDescentOptimizer(learning_rate=0.001)
         self.updateModel = trainer.minimize(self.loss)
-
-
-def get_card_color(card_index):
-    if card_index < 3:
-        return bmc.Color.Red
-    if card_index < 6:
-        return bmc.Color.Yellow
-    if card_index < 9:
-        return bmc.Color.Green
-    return bmc.Color.Blue
-
-
-def get_card_value(card_index):
-    if card_index % 3 == 0:
-        return 2
-    if card_index % 3 == 1:
-        return 3
-    if card_index % 3 == 2:
-        return 5
 
 
 turns_per_episode = 108
@@ -83,7 +66,8 @@ with tf.Session() as session:
                 target_output[0][chosen_action] = reward + y * maxQ1
                 _, _loss = session.run([agent.updateModel, agent.loss], feed_dict={agent.state_in: [encoded_state], agent.target_output: target_output})
 
-                # print("loss: {}".format(_loss))
+                # if reward > 0:
+                #     print("target_output: {}, loss: {}".format(target_output, _loss))
                 loss = loss + _loss
 
                 state = new_state
